@@ -27,10 +27,10 @@ RSpec.describe Person, type: :model do
   end
 
   describe "#full_name" do
-    it "is the first name followed the last name for the person" do
-      person = described_class.new(first_name: "Expected First Name" last_name: "Expected Last Name")
+    it "is the first name followed by the last name for the person" do
+      person = described_class.new(first_name: "Expected First Name", last_name: "Expected Last Name")
 
-      expect(person.last_name).to eq("Expected First Name Expected Last Name")
+      expect(person.full_name).to eq("Expected First Name Expected Last Name")
     end
   end
 end
@@ -73,7 +73,7 @@ Since `describe` and `context` perform the exact same way, why have two methods 
 describe "#first_name" do
 ```
 
-Here we see a `describe` with a string. This creates an example group for the `first_name` instance method on the `Person` object. It is convention to describe instance methods by prefixing the method name with a `#`. To describe a class method convention dictates prefixing with a `.`. There will be times when you are creating an example group that does not describe a method. In those cases, the subject will be a descriptive string.
+Here we see a `describe` with a string. This creates an example group for the `first_name` instance method on the `Person` object. It is conventional to describe instance methods by prefixing the method name with a `#`. To describe a class method, convention dictates prefixing with a `.`. There will be times when you are creating an example group that does not describe a method. In those cases, the subject will be a descriptive string.
 
 ## Examples
 
@@ -81,7 +81,7 @@ Here we see a `describe` with a string. This creates an example group for the `f
 it "is the first name for the person" do
 ```
 
-Tests in RSpec are called examples. They are declared with an `it` method. Here we are passing in a string `"is the first name for the person"` to describe the expected behavior of the interaction under test. The `it` method takes a block. The block defines the code which is executed when RSpec 'runs the example'. This code exercises and verifies the expectation stated in its description.
+Tests in RSpec are called examples. They are declared with an `it` method. Here we are passing in a string `"is the first name for the person"` to describe the expected behavior of the interaction under test. The `it` method takes a block. The block defines the code that is executed when RSpec runs the example. This code exercises and verifies the expectation stated in its description.
 
 ## Expectations and Matchers
 
@@ -121,7 +121,7 @@ It is best to end a spec file with `_spec.rb`, and to place it under the `spec` 
 
 Running `rspec` on this test file produces a breakdown of the `describe`, `context`, and `it` descriptions:
 
-```
+``` ruby
 Person
   #first_name
     is the first name for the person
@@ -142,7 +142,7 @@ Here is the [documention on using before & after hooks](https://relishapp.com/rs
 Let's use creating a valid T-Shirt as an example. (Remember that `context` is an alias for `describe`.)
 
 ```ruby
-Rspec.describe TShirt do
+RSpec.describe TShirt do
   before do
     @valid_attributes = { size: "XS" }
     @invalid_attributes = { size: "XXXXXXXXXS"}
@@ -169,7 +169,7 @@ While the snippet above looks appealing in some ways, there is actually a lot of
 Let's try writing the same tests with `let`:
 
 ```ruby
-Rspec.describe TShirt do
+RSpec.describe TShirt do
   let(:valid_attributes) do
     { size: "XS" }
   end
@@ -203,7 +203,7 @@ Finally, when using `let`, any tests in the `"other stuff"` `context` will not c
 But wait. What happens when our spec file starts using more and more `let`s?
 
 ```ruby
-Rspec.describe TShirt do
+RSpec.describe TShirt do
   let(:valid_attributes) do
     { size: "XS" }
   end
@@ -241,11 +241,11 @@ Rspec.describe TShirt do
   end
 
   it "can be ripped" do
-    shirt = TShirt.new(valid_attriubtes)
+    shirt = TShirt.new(valid_attributes)
     expect(shirt.rip!).to eq("Oh no! I'm torn!")
   end
 
-  # many many more tests
+  # many more tests
 end
 ```
 
@@ -288,7 +288,7 @@ Rspec.describe TShirt do
 end
 ```
 
-This is the best test file yet. Because we are not using `before` nor `let`, we don't need to search around our test examples to figure out what values are in use. We have reduced the cognitive burn of understanding our test code, and thus made them easier to understand and edit/improve as our `TShirt` class evolves. We also quickly understand what our tests do NOT require.
+This is the clearest test file yet. Because we are not using `before` or `let`, we don't need to search around our test examples to figure out what values are in use. We have reduced the cognitive load of understanding our test code, making them easier to read, edit, and improve as our `TShirt` class evolves. We also quickly understand what our tests do NOT require.
 
 `before` and `let` can easily lead to the testing [Obscure Test](http://xunitpatterns.com/Obscure%20Test.html), [Fragile Test](http://xunitpatterns.com/Fragile%20Test.html#Fragile%20Fixture), and [Slow Test](http://xunitpatterns.com/Slow%20Tests.html) coding smells. Avoiding `before` and `let` can help us avoid these problems.
 
@@ -311,7 +311,7 @@ Or:
 
 This is called a [Four-Phase Test and can be read about here](https://robots.thoughtbot.com/four-phase-test).
 
-* Setup - Prepare the system to test our scenario. Typically this requires us to setup an object(s)'s state so we may make assertions about the behavior we intend to test.
+* Setup - Prepare the system to test our scenario. Typically this requires us to set up an object's state so we can make assertions about the behavior we intend to test.
 
 * Exercise - Use and exercise the system under test.
 
@@ -331,7 +331,7 @@ As you gain experience, you will form your own opinions on what kind of tests pr
 
 Many developers have the mind set that simply having any tests in their project is a step in the right direction. And they are generally right! But, a poorly written test suite may be slow, and/or brittle, and it might not verify everything it implies.
 
-The best way to learn about testing is to jump in and start creating your own spec files. Use examples you've seen in the past, and the guidance of your fellow Power developers as you continue to learn.
+The best way to learn about testing is to jump in and start creating your own spec files. Use examples you've seen in the past, and the guidance of your fellow developers as you continue to learn.
 
 ## Does this need an update?
 
